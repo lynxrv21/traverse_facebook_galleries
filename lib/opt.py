@@ -10,6 +10,7 @@ class Opt(Enum):
     MAX_WORKERS = "max_workers"
     DESTINATION = "destination_dir"
     USERNAME = "username"
+    PASSWORD = "password"
     LOGIN = "force_login"
     BASE_URL = "loginURL"
     UNIQUE_GALLERIES = "unique_galleries"
