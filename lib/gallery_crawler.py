@@ -53,7 +53,9 @@ class GalleryCrawler(object):
             if not username:
                 username = input("Username: ")
             #VSCode debug can not pass through getpass
-            password = getpass("Password: ")
+            password = self.options[Opt.PASSWORD.value]
+            if not password:
+                password = getpass("Password: ")
             self.browser.find_element_by_id(Selectors.AUTH_EMAIL.value).send_keys(username)
             self.browser.find_element_by_id(Selectors.AUTH_PASS.value).send_keys(password)
             self.browser.find_element_by_id(Selectors.AUTH_BUTTON.value).click()
