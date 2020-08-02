@@ -1,4 +1,4 @@
-""" Traverse the galleries based on the info that it got from opions. """
+""" Traverse the galleries based on the info that it got from options. """
 
 import logging
 import os
@@ -9,13 +9,11 @@ from getpass import getpass
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import NoSuchElementException
-from lib.galleries import Galleries
+from lib.const import Galleries, Files, Opt, Selectors
 from lib.download_worker import DownloadWorker
-from lib.selectors import Selectors
-from lib.opt import Opt
-from lib.files import Files
+
 
 class GalleryCrawler(object):
     """ Traverse a gallery until it finds an element that it encountered before.
@@ -39,12 +37,12 @@ class GalleryCrawler(object):
 
     def auth(self):
         """ Authenticate the user """
-        #Redirect to login url is needed for session cookis, because they are available for domain
+        # Redirect to login url is needed for session cookis, because they are available for domain
         self.browser.get(self.options[Opt.BASE_URL.value])
         if not self.options[Opt.LOGIN.value] and not self.options[Opt.COOKIES.value]:
             logging.warning(
-                "You chose to start without login," \
-                " but you haven't provided any cookies,"\
+                "You chose to start without login,"
+                " but you haven't provided any cookies,"
                 " I let you log in for now.")
             self.options[Opt.LOGIN.value] = True
         if self.options[Opt.LOGIN.value]:
@@ -52,7 +50,6 @@ class GalleryCrawler(object):
             username = self.options[Opt.USERNAME.value]
             if not username:
                 username = input("Username: ")
-            #VSCode debug can not pass through getpass
             password = self.options[Opt.PASSWORD.value]
             if not password:
                 password = getpass("Password: ")
@@ -136,11 +133,11 @@ class GalleryCrawler(object):
     def click_next(self, waitforstale):
         """ Go to the next image and wait for element to disappear """
         element = WebDriverWait(self.browser, 3).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, Selectors.NEXT_BUTTON.value))
+            ec.presence_of_element_located((By.CSS_SELECTOR, Selectors.NEXT_BUTTON.value))
         )
         element.click()
         WebDriverWait(self.browser, 15).until(
-            EC.staleness_of(waitforstale)
+            ec.staleness_of(waitforstale)
         )
 
     def download_gallery(self, image_url):
@@ -159,7 +156,7 @@ class GalleryCrawler(object):
         image_name = ''
         missing_infinite_loop_preventer = set()
         fullscreen_element = WebDriverWait(self.browser, 3).until(
-            EC.presence_of_element_located((By.ID, Selectors.FULLSCREEN.value))
+            ec.presence_of_element_located((By.ID, Selectors.FULLSCREEN.value))
         )
         fullscreen_element.click()
         while True:
@@ -199,7 +196,7 @@ class GalleryCrawler(object):
                 (image,
                  "{}/{}".format(gallery_name, str(image_name)),
                  self.options[Opt.COOKIES.value]
-                )
+                 )
             )
             self.click_next(image_elem)
         print('[ {} images found. ]'.format(index))

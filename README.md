@@ -1,4 +1,4 @@
-# Facebook Gallery Downloader (Windows only)
+# Facebook Gallery Downloader
 
 It is a scraper that loads an image from facebook, downloads it in full size and travels through the gallery until it arrives to the same image.
 
@@ -6,7 +6,7 @@ It assumes that:
 
 * the user provided link is an opened image, not just a gallery.
 * certain style classes appear in these facebook pages
-* the user provides good login information
+* the user provides valid login information
 
 Disclaimer: The secretly entered password is only used to pass it to selenium in the login page
 
@@ -44,6 +44,7 @@ loginURL | Url for the domain for session cookies, also contains the login field
 start_images | Array that holds full URL address (with parameters) of one image from each downloadable gallery.
 max_workers | Number of parallel image save processes
 username | The credential email address, if it is not present it will be asked for. It won't be stored anywhere, only sent to selenium.
+password | The credential password, if it is not present it will be asked for. It won't be stored anywhere, only sent to selenium.
 cookies | The cookies facebook uses to authenticate the users. After login I write the current cookies to the cobsole. I recommend you to fill it with that one, but feel free to get it from another source, but it might not work as intended.
 force_login | If `true` the login data will be requested, the password will have to be written in secretly. If `false` then the provided cookies will be used to authenticate the requests, but when no cookies are provided, then the user will be forced to sign in.
 save_image_index | If set to `true`, then save images by their appearance order by adding a number before their names.

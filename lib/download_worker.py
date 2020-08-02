@@ -6,6 +6,7 @@ from threading import Thread
 from PIL import Image
 import requests
 
+
 class DownloadWorker(Thread):
     """ Download images on a separate thread """
     def __init__(self, queue):

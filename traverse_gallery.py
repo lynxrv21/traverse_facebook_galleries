@@ -5,8 +5,9 @@ import logging
 import timeit
 from argparse import ArgumentParser
 
-from lib.files import Files
+from lib.const import Files
 from lib.gallery_crawler import GalleryCrawler
+
 
 def main():
     """ Traverse the galleries """
@@ -16,9 +17,8 @@ def main():
             options = json.load(options_file)
             if args.url:
                 options['start_images'] = args.url,
-            options['password'] = args.password
-            creawler = GalleryCrawler(options)
-            creawler.run()
+            crawler = GalleryCrawler(options)
+            crawler.run()
     except FileNotFoundError:
         logging.error(
             "You should create your own %s from %s!",
@@ -26,11 +26,12 @@ def main():
             Files.OPTIONS_TEMPLATE.value
         )
 
+
 def _parse_args():
     parser = ArgumentParser()
-    parser.add_argument('-p', '--password', type=str, help='Facebook password.')
     parser.add_argument('-u', '--url', type=str, help='Start image URL.')
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     print("[Facebook Gallery Downloader v0.3]")

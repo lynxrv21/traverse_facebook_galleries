@@ -3,6 +3,7 @@
     "start_images": [],
     "max_workers": 8,
     "username": "",
+    "password": "",
     "force_login": false,
     "save_image_index": true,
     "cookies": {},
